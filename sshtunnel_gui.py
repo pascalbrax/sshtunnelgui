@@ -23,6 +23,9 @@ except ImportError:  # pragma: no cover - handled in UI at runtime
 
 APP_TITLE = "SSH Tunnel Helper"
 PROFILE_PATH = Path.home() / ".ssh_tunnel_helper_profiles.json"
+APP_DIR = Path(__file__).resolve().parent
+ICON_PNG_PATH = APP_DIR / "assets" / "app_icon.png"
+ICON_ICO_PATH = APP_DIR / "assets" / "app_icon.ico"
 
 
 class QueueLogHandler(logging.Handler):
@@ -41,6 +44,8 @@ class TunnelApp(tk.Tk):
         self.title(APP_TITLE)
         self.geometry("980x700")
         self.minsize(900, 640)
+        self.icon_image = None
+        self.set_window_icon()
 
         self.server = None
         self.worker = None
@@ -68,6 +73,16 @@ class TunnelApp(tk.Tk):
         self.build_ui()
         self.refresh_profile_list()
         self.after(120, self.process_events)
+
+    def set_window_icon(self):
+        try:
+            if ICON_ICO_PATH.exists():
+                self.iconbitmap(str(ICON_ICO_PATH))
+            if ICON_PNG_PATH.exists():
+                self.icon_image = tk.PhotoImage(file=str(ICON_PNG_PATH))
+                self.iconphoto(True, self.icon_image)
+        except tk.TclError:
+            pass
 
     def build_tunnel_logger(self):
         logger = logging.getLogger(f"{APP_TITLE}.{id(self)}")

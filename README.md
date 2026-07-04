@@ -10,6 +10,8 @@ This project was created with assistance from OpenAI Codex. Review and test the 
 
 The app opens a local port on your computer and forwards it through an SSH server to a remote service.
 
+The window uses the generated icon assets in `assets/app_icon.png` and `assets/app_icon.ico`.
+
 Typical use cases:
 
 - Connect to a private database through a bastion host.
